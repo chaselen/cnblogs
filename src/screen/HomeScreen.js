@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, StyleSheet, View, FlatList} from 'react-native'
+import {Text, StyleSheet, View, FlatList, Image, Pressable} from 'react-native'
 import http from '../lib/http'
 import ItemSeparator from '../component/ItemSeparator'
 import Skeleton from '../component/Skeleton'
@@ -21,7 +21,7 @@ export default class HomeScreen extends Component {
   }
 
   async _getList(p) {
-    console.log(`getList：${p}`)
+    console.log(`首页获取列表：${p}`)
     this.setState({
       isRefreshing: p === 1
     })
@@ -35,13 +35,28 @@ export default class HomeScreen extends Component {
     })
   }
 
-  _keyExtractor = (item, index) => item.Id + '_' + index
+  _keyExtractor = (item, index) => index + ''
 
   _renderItem = ({item}) => (
-    <View style={styles.item} key={item.id}>
-      <Text>{item.Title}</Text>
-    </View>
+    <Pressable style={styles.item} onPress={() => this._onPressItem(item)}>
+      <View style={styles.itemHeader}>
+        <Image style={styles.itemAvatar} source={{uri: item.Avatar}} />
+        <Text style={styles.itemNickname}>{item.Author}</Text>
+      </View>
+      <Text style={styles.itemTitle} numberOfLines={2} ellipsizeMode="tail">
+        {item.Title}
+      </Text>
+      <Text style={styles.itemDesc} numberOfLines={3} ellipsizeMode="tail">
+        {item.Description}
+      </Text>
+    </Pressable>
   )
+
+  _onPressItem = item => {
+    this.props.navigation.push('BlogPostDetail', {
+      id: item.Id
+    })
+  }
 
   render() {
     return (
@@ -55,7 +70,7 @@ export default class HomeScreen extends Component {
             onEndReached={() => this._getList(this.state.page + 1)}
             data={this.state.dataList}
             keyExtractor={this._keyExtractor}
-            onEndReachedThreshold={0.01}
+            onEndReachedThreshold={0.1}
             ItemSeparatorComponent={ItemSeparator}
             renderItem={this._renderItem}
           />
@@ -67,8 +82,33 @@ export default class HomeScreen extends Component {
 
 const styles = StyleSheet.create({
   item: {
-    height: 60,
     paddingHorizontal: 12,
+    paddingVertical: 12,
     justifyContent: 'center'
+  },
+  itemHeader: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  itemAvatar: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginRight: 10
+  },
+  itemNickname: {
+    fontSize: 14,
+    color: '#000'
+  },
+  itemTitle: {
+    marginVertical: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333'
+  },
+  itemDesc: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#666'
   }
 })

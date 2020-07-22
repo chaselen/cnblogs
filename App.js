@@ -8,6 +8,7 @@ import ProfileScreen from './src/screen/ProfileScreen'
 import LoginScreen from './src/screen/LoginScreen'
 import http from './src/lib/http'
 import openApi from './src/config/openApi'
+import BlogPostDetailScreen from './src/screen/BlogPostDetailScreen'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -51,6 +52,7 @@ export default function App() {
           }}>
           <Stack.Screen name="首页" component={Root} />
           <Stack.Screen name="Login" options={{title: '登录'}} component={LoginScreen} />
+          <Stack.Screen name="BlogPostDetail" options={{title: '博文详情'}} component={BlogPostDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

@@ -10,6 +10,7 @@ export default class ItemSeparator extends Component {
 const styles = StyleSheet.create({
   line: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#ececec'
+    // backgroundColor: '#ececec'
+    backgroundColor: '#ddd'
   }
 })

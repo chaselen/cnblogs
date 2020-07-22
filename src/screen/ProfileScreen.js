@@ -6,16 +6,18 @@ import ItemSeparator from '../component/ItemSeparator'
 export default function ProfileScreen() {
   const items = [
     {
+      id: '1',
       title: '我的收藏'
     },
     {
+      id: '2',
       title: '我的文摘'
     }
   ]
 
   const _renderItem = ({item}) => {
     return (
-      <View style={styles.item} key={item.title}>
+      <View style={styles.item}>
         <Text>{item.title}</Text>
       </View>
     )
